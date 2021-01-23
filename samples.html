@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Organizing Samples</title>
+
+</head>
+
+<body>
+  <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css'>
+  <style>
+    html {
+      overflow: -moz-scrollbars-vertical;
+      overflow-y: scroll;
+    }
+
+    *:focus {
+      outline: none !important;
+    }
+
+    *::-moz-focus-inner {
+      border: 0 !important;
+    }
+
+    #wrapper {
+      padding-top: 30px;
+    }
+
+    label {
+      font-weight: 300;
+      margin: 0 .4em 0 0;
+    }
+
+    #tab-one,
+    #tab-two,
+    #tab-three {
+      color: black;
+      transition: all 0.3s;
+      -webkit-transition: all .3s;
+      -moz-transition: all .3s;
+      -o-transition: all .3s;
+      -ms-transition: all .3s;
+      font-size: 14px;
+    }
+
+
+    .active #tab-one,
+    .active #tab-two,
+    .active #tab-three {
+      color: navy;
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    .tab-pane h3 {
+      color: navy;
+      font-weight: bold;
+    }
+
+    .container .mix,
+    .container .gap {
+      display: inline-block;
+      width: 100%;
+      background-position: center;
+    }
+
+    .container .mix {
+      text-align: left;
+      /* background: #03899c; */
+      margin-bottom: 5px;
+      display: none;
+      background-size: cover;
+      transition: all .3s;
+      -webkit-transition: all .3s;
+      -moz-transition: all .3s;
+      -o-transition: all .3s;
+      -ms-transition: all .3s;
+      border: 0px solid white;
+
+    }
+
+    .container .mix:hover {
+      text-align: left;
+      /* background: #03899c; */
+      margin-bottom: 5px;
+      display: none;
+      /* webkit-filter: blur(2px); */
+      /* Chrome, Safari, Opera */
+      /* filter: blur(2px); */
+      box-shadow: 0 0px 75px rgba(0, 0, 0, 0.75) inset;
+    }
+
+    .container .mix.category-1,
+    .container .mix.category-2,
+    .container .mix.category-3,
+    .container .mix.category-4,
+    .container .mix.category-5,
+    .container .mix.category-6,
+    .container .mix.category-7,
+    .container .mix.category-8,
+    .container .mix.category-9,
+    .container .mix.category-10,
+    .container .mix.category-11,
+    .container .mix.category-12,
+    .container .mix.category-13,
+    .container .mix.category-14 {
+      /* border-top: 2px solid limegreen; */
+      transition: all .3s !important;
+      -webkit-transition: all .3s !important;
+      -moz-transition: all .3s !important;
+      -o-transition: all .3s !important;
+      -ms-transition: all .3s !important;
+    }
+
+    .container .mix:after {
+      content: attr(data-myorder);
+      color: white;
+      font-size: 16px;
+      display: inline-block;
+      vertical-align: top;
+      padding: 4% 6%;
+      font-weight: 700;
+      transition: all .3s !important;
+      -webkit-transition: all .3s !important;
+      -moz-transition: all .3s !important;
+      -o-transition: all .3s !important;
+      -ms-transition: all .3s !important;
+    }
+
+    .container .mix:before {
+      content: '';
+      display: inline-block;
+      padding-top: 60%;
+      transition: all .3s !important;
+      -webkit-transition: all .3s !important;
+      -moz-transition: all .3s !important;
+      -o-transition: all .3s !important;
+      -ms-transition: all .3s !important;
+    }
+
+    #sidebar label {
+      padding-top: 13px;
+    }
+
+    #sidebar hr {
+      margin-top: 10px;
+    }
+
+    .btn-primary {
+      /* background-color: #162B52; */
+      background: none !important;
+      border: none !important;
+      color: navy;
+      transition: all .3s;
+      -webkit-transition: all .3s;
+      -moz-transition: all .3s;
+      -o-transition: all .3s;
+      -ms-transition: all .3s;
+      font-size: 16px;
+      text-align: left;
+      border-radius: 0px !important;
+      border-left: 1px solid rgb(1, 1, 133, 0) !important;
+    }
+
+    .btn-primary.active {
+      /* background-color: #0D2142 !important; */
+      background: none !important;
+      color: navy !important;
+      font-weight: bold;
+      font-size: 18px;
+      box-shadow: none !important;
+      border-left: 1px solid rgb(196, 196, 196) !important;
+    }
+
+    .btn-primary:hover {
+      color: navy !important;
+      font-weight: bold;
+      font-size: 18px;
+
+    }
+
+    .btn-primary.disabled {
+      background-color: #EDD991 !important;
+      border: 0px solid #EDD991;
+      display: none;
+    }
+
+    @media all and (min-width: 420px) {
+
+      .container .mix,
+      .container .gap {
+        width: 32.5%;
+        /* height: 250px; */
+      }
+    }
+
+    @media all and (min-width: 640px) {
+
+      .container .mix,
+      .container .gap {
+        width: 32.5%;
+      }
+    }
+
+    .mediabox-wrap {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      background-color: #000;
+      background-color: rgba(0, 0, 0, 0.99);
+      top: 0;
+      left: 0;
+      opacity: 0;
+      z-index: 999;
+      -webkit-animation-duration: 0.5s;
+      animation-duration: 0.5s;
+      -webkit-animation-fill-mode: both;
+      animation-fill-mode: both;
+      -webkit-animation-name: mediabox;
+      animation-name: mediabox;
+    }
+
+    @-webkit-keyframes mediabox {
+      0% {
+        opacity: 0;
+      }
+
+      100% {
+        opacity: 1;
+      }
+    }
+
+    @keyframes mediabox {
+      0% {
+        opacity: 0;
+      }
+
+      100% {
+        opacity: 1;
+      }
+    }
+
+    .mediabox-content {
+      max-width: 680px;
+      display: block;
+      margin: 0 auto;
+      height: 100%;
+      position: relative;
+    }
+
+    .mediabox-content iframe {
+      max-width: 100% !important;
+      width: 100% !important;
+      display: block !important;
+      height: 480px !important;
+      border: none !important;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      margin: auto 0;
+    }
+
+    .mediabox-hide {
+      -webkit-animation-duration: 0.5s;
+      animation-duration: 0.5s;
+      -webkit-animation-fill-mode: both;
+      animation-fill-mode: both;
+      -webkit-animation-name: mediaboxhide;
+      animation-name: mediaboxhide;
+    }
+
+    @-webkit-keyframes mediaboxhide {
+      0% {
+        opacity: 1;
+      }
+
+      100% {
+        opacity: 0;
+      }
+    }
+
+    @keyframes mediaboxhide {
+      0% {
+        opacity: 1;
+      }
+
+      100% {
+        opacity: 0;
+      }
+    }
+
+    .mediabox-close {
+      position: absolute;
+      top: 0;
+      cursor: pointer;
+      bottom: 528px;
+      right: 0px;
+      margin: auto 0;
+      width: 24px;
+      height: 24px;
+      background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAAMvSURBVHja7Js9aBRBFMd/d1lPY6FiJVjY+Fkoxl7wA1Q0prQRS6tgoZV2MWIRRVHUUq3U+JnESrS2sBXBzipREWMlATXwt8gFznC5nd15M7Nn8uC45nZnfr/dY96+N1uTxFKOOks8lgUU/H2t4tJqIQUcAiaBGeBymcECRgO4B/wBPgJ9zkdKcvkclfRL/8ZtSTXH40N+GpLGF8zth6Q9Lse7DHCsDXxVJLSDLyQhb4B+Sb/VOVJJ6ATfKqGvrIDjDvCpJLjAz8d0JwmLDTBQAD62hIakiYJzm5a021VAfwn4WBLKwLdK2JUnIJP0XX4RSoIP/Hy8W3jeepv1dL3nmjwI3DLOExrAU2DA8zwb8xKhGeCuwYQtJTSAZwbwAHdcEqFM0mPZhO/foSHppdFcrraby2IDV0FCcPi8PCClhCjwLplgCgkrDeGv5I3pcjViSogK7yogloTo8EUEhJaQBL6oAGsJ9yVtkrRD0qsU8JKolagKZ8AD4ETFymFXgPOAQpXE5mMWOAk86XZ4n6pwlSSUhvcti1dBghe8RV8gpYQRX3irxkgKCSPABV94y85QTAlm8NatsRgSTOGBUnmAS57w3KiA0Ro3gHOW8KEEAOwE3hvfXWubFauu6A6vCND07OmW9viq5vpsGT3AtRAN2XoA+BfAwQBiTweoNpMZw48BRwKuAoPN7zNVWwZjwAfpO9S7DN5cQmYAPw4cTvAsYPJ3qHcpvNmdUO9ieBMJZQT0AhMVgfeWUC8BP87cjjHfuA6sATY0c4c0EgpUUHslvTaq3l5aUL1N1oarAnxSCVWBTyYhJvyw41XJJI3GkpAH/yYyfHQJi01gdUL4qBKqCh9NQrtBx4wGvGi0XS6T9MhoTkN5AtZVDN5awlTePsGfwDfPjGwYGDKu3s4Cp4BRz/N8cskED0iaqciVt7wTvkra5roKlJEQGt5HwhdJ24vmAUUkDEV+VyCT9NBxbp/bXXnXTNBFQmz4IhI6wrs+C+zvICEVvIuEKUlbrZ4G97WRkBq+k4RJSVusd4ntlfSheVudrQh8q4SbmntH6K2kzSF3if1Xsfzq7LKAJR5/BwCdAQBJn4egPgAAAABJRU5ErkJggg==') no-repeat;
+      background-size: 24px 24px;
+      -webkit-background-size: 24px 24px;
+      -moz-background-size: 24px 24px;
+      -o-background-size: 24px 24px;
+    }
+
+    .mediabox-close:hover {
+      opacity: 0.5;
+    }
+
+    @media all and (max-width: 768px) and (min-width: 10px) {
+      .mediabox-content {
+        max-width: 90%;
+      }
+    }
+
+    @media all and (max-width: 600px) and (min-width: 10px) {
+      .mediabox-content iframe {
+        height: 320px !important;
+      }
+
+      .mediabox-close {
+        bottom: 362px;
+      }
+    }
+
+    @media all and (max-width: 480px) and (min-width: 10px) {
+      .mediabox-content iframe {
+        height: 220px !important;
+      }
+
+      .mediabox-close {
+        bottom: 262px;
+      }
+    }
+  </style>
+  <!-- partial:index.partial.html -->
+  <div class="container" id="wrapper">
+    <div class="row">
+      <div class="col-sm-10">
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs nav-justified" role="tablist" id="myTabs">
+          <li role="presentation" class="active"><a href="#content-one" aria-controls="content-one" role="tab"
+              data-toggle="tab" id="tab-one">Medical Samples</a></li>
+          <li role="presentation"><a href="#content-two" aria-controls="content-two" role="tab" data-toggle="tab"
+              id="tab-two">Accident Samples</a></li>
+          <li role="presentation"><a href="#content-three" aria-controls="content-three" role="tab" data-toggle="tab"
+              id="tab-three">DPV</a></li>
+        </ul>
+        <!-- Tab panes -->
+        <div class="tab-content">
+          <div role="tabpanel" class="tab-pane active" id="content-one">
+            <h3>Medical Animations</h3>
+            <a href="https://vimeo.com/372766092" class="mediabox">
+              <div class="mix category-5" data-myorder=" "
+                style="background-image: url('https://i.vimeocdn.com/video/830682300.jpg'); ">
+              </div>
+            </a>
+            <a href="https://vimeo.com/425954463" class="mediabox">
+              <div class="mix category-9" data-myorder=" "
+                style="background-image: url('https://i.vimeocdn.com/video/903829620.jpg'); ">
+              </div>
+            </a>
+            <a href="https://vimeo.com/350899014" class="mediabox">
+              <div class="mix category-9" data-myorder=" "
+                style="background-image: url('https://i.vimeocdn.com/video/802322190.jpg'); ">
+              </div>
+            </a>
+            <a href="https://vimeo.com/345534162" class="mediabox">
+              <div class="mix category-2" data-myorder=" "
+                style="background-image: url('https://i.vimeocdn.com/video/795333230.jpg'); ">
+              </div>
+            </a>
+            <a href="https://vimeo.com/395866192" class="mediabox">
+              <div class="mix category-9" data-myorder=" "
+                style="background-image: url('https://i.vimeocdn.com/video/862337752.jpg'); ">
+              </div>
+            </a>
+            <a href="https://vimeo.com/425956160" class="mediabox">
+              <div class="mix category-9" data-myorder=" "
+                style="background-image: url('https://i.vimeocdn.com/video/903831990.jpg'); ">
+              </div>
+            </a>
+            <a href="https://vimeo.com/419110345" class="mediabox">
+              <div class="mix category-6" data-myorder=" "
+                style="background-image: url('https://i.vimeocdn.com/video/1040049057.jpg'); ">
+              </div>
+            </a>
+            <a href="https://vimeo.com/332110954" class="mediabox">
+              <div class="mix category-9" data-myorder=" "
+                style="background-image: url('https://i.vimeocdn.com/video/779104184.jpg'); ">
+              </div>
+            </a>
+            <a href="https://vimeo.com/345785682" class="mediabox">
+              <div class="mix category-9" data-myorder=" "
+                style="background-image: url('https://i.vimeocdn.com/video/797413056.jpg'); ">
+              </div>
+            </a>
+            <a href="https://vimeo.com/360929283" class="mediabox">
+              <div class="mix category-3" data-myorder=" "
+                style="background-image: url('https://i.vimeocdn.com/video/815566497.jpg'); ">
+              </div>
+            </a>
+            <a href="https://vimeo.com/282573574" class="mediabox">
+              <div class="mix category-9" data-myorder=" "
+                style="background-image: url('https://i.vimeocdn.com/video/716644150.jpg'); ">
+              </div>
+            </a>
+            <a href="https://vimeo.com/273410244" class="mediabox">
+              <div class="mix category-2 category-8" data-myorder=" "
+                style="background-image: url('https://i.vimeocdn.com/video/705199701.jpg'); ">
+              </div>
+            </a>
+            <a href="https://vimeo.com/263572756" class="mediabox">
+              <div class="mix category-5" data-myorder=" "
+                style="background-image: url('https://i.vimeocdn.com/video/693155222.jpg'); ">
+              </div>
+            </a>
+            <a href="https://vimeo.com/263572587" class="mediabox">
+              <div class="mix category-5" data-myorder=" "
+                style="background-image: url('https://i.vimeocdn.com/video/693155390.jpg'); ">
+              </div>
+            </a>
+            <a href="https://vimeo.com/283120159" class="mediabox">
+              <div class="mix category-5" data-myorder=" "
+                style="background-image: url('https://i.vimeocdn.com/video/717332567.jpg'); ">
+              </div>
+            </a>
+            <a href="https://vimeo.com/263570642" class="mediabox">
+              <div class="mix category-9" data-myorder=" "
+                style="background-image: url('https://i.vimeocdn.com/video/693157007.jpg'); ">
+              </div>
+            </a>
+            <a href="https://vimeo.com/263572340" class="mediabox">
+              <div class="mix category-2" data-myorder=" "
+                style="background-image: url('https://i.vimeocdn.com/video/693155910.jpg'); ">
+              </div>
+            </a>
+            <a href="https://vimeo.com/263569650" class="mediabox">
+              <div class="mix category-2" data-myorder=" "
+                style="background-image: url('https://i.vimeocdn.com/video/693136988.jpg'); ">
+              </div>
+            </a>
+            <a href="https://vimeo.com/263571209" class="mediabox">
+              <div class="mix category-2" data-myorder=" "
+                style="background-image: url('https://i.vimeocdn.com/video/693138459.jpg'); ">
+              </div>
+            </a>
+            <a href="https://vimeo.com/263571416" class="mediabox">
+              <div class="mix category-2" data-myorder=" "
+                style="background-image: url('https://i.vimeocdn.com/video/693156244.jpg'); ">
+              </div>
+            </a>
+            <!-- <a href="https://vimeo.com/263571209" class="mediabox">
+              <div class="mix category-1" data-myorder=" "
+                style="background-image: url('https://i.vimeocdn.com/video/693138459.jpg'); ">
+              </div>
+            </a> -->
+
+            <!-- <div class="gap"></div> -->
+            <!-- <div class="gap"></div> -->
+          </div>
+          <div role="tabpanel" class="tab-pane" id="content-two">
+            <h3>Accident Reconstructions</h3>
+            <a href="https://vimeo.com/394227903" class="mediabox">
+              <div class="mix category-10" data-myorder=" "
+                style="background-image: url('https://i.vimeocdn.com/video/860018567.jpg'); ">
+              </div>
+            </a>
+            <a href="https://vimeo.com/387054911" class="mediabox">
+              <div class="mix category-10" data-myorder=" "
+                style="background-image: url('https://i.vimeocdn.com/video/1041998108.jpg'); ">
+              </div>
+            </a>
+            <a href="https://vimeo.com/429479625" class="mediabox">
+              <div class="mix category-10" data-myorder=" "
+                style="background-image: url('https://i.vimeocdn.com/video/909937030.jpg'); ">
+              </div>
+            </a>
+            <a href="https://vimeo.com/428156917" class="mediabox">
+              <div class="mix category-10" data-myorder=" "
+                style="background-image: url('https://i.vimeocdn.com/video/907443564.jpg'); ">
+              </div>
+            </a>
+            <a href="https://vimeo.com/349129567" class="mediabox">
+              <div class="mix category-10" data-myorder=" "
+                style="background-image: url('https://i.vimeocdn.com/video/799979134.jpg'); ">
+              </div>
+            </a>
+            <a href="https://vimeo.com/349095067" class="mediabox">
+              <div class="mix category-10" data-myorder=" "
+                style="background-image: url('https://i.vimeocdn.com/video/799932968.jpg'); ">
+              </div>
+            </a>
+            <a href="https://vimeo.com/353434224" class="mediabox">
+              <div class="mix category-10" data-myorder=" "
+                style="background-image: url('https://i.vimeocdn.com/video/805618385.jpg'); ">
+              </div>
+            </a>
+            <a href="https://vimeo.com/353434224" class="mediabox">
+              <div class="mix category-10" data-myorder=" "
+                style="background-image: url('https://i.vimeocdn.com/video/805618385.jpg'); ">
+              </div>
+            </a>
+
+            <!-- <div class="gap"></div>
+            <div class="gap"></div> -->
+          </div>
+          <div role="tabpanel" class="tab-pane" id="content-three">
+            <h3>Demand Package Videos</h3>
+            <div class="mix category-4" data-myorder=" "></div>
+            <div class="mix category-3" data-myorder=" "></div>
+            <div class="mix category-4" data-myorder=" "></div>
+            <div class="mix category-4" data-myorder=" "></div>
+            <div class="mix category-3" data-myorder=" "></div>
+            <div class="mix category-4" data-myorder=" "></div>
+            <div class="mix category-4" data-myorder=" "></div>
+            <div class="mix category-3" data-myorder=" "></div>
+
+            <!-- <div class="gap"></div>
+            <div class="gap"></div> -->
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-2" id="sidebar">
+        <div>
+          <label>Filters</label>
+          <hr>
+          <!-- <label>Surgery Type</label> -->
+          <button class="btn btn-primary btn-block filter-one" data-filter="all">All</button>
+          <button class="btn btn-primary btn-block filter-one" data-filter=".category-1">Abdomen</button>
+          <button class="btn btn-primary btn-block filter-one" data-filter=".category-2">Arm</button>
+          <button class="btn btn-primary btn-block filter-one" data-filter=".category-3">Brain</button>
+          <button class="btn btn-primary btn-block filter-one" data-filter=".category-4">Chest</button>
+          <button class="btn btn-primary btn-block filter-one" data-filter=".category-5">Leg</button>
+          <button class="btn btn-primary btn-block filter-one" data-filter=".category-6">Pain</button>
+          <button class="btn btn-primary btn-block filter-one" data-filter=".category-7">Pelvis</button>
+          <button class="btn btn-primary btn-block filter-one" data-filter=".category-8">Skin</button>
+          <button class="btn btn-primary btn-block filter-one" data-filter=".category-9">Spine</button>
+
+          <!-- <label>Sort:</label>
+          <button class="btn btn-default btn-block sort-one" data-sort="myorder:asc">Asc</button>
+          <button class="btn btn-default btn-block sort-one" data-sort="myorder:desc">Desc</button> -->
+        </div>
+        <!-- <hr /> -->
+        <div>
+          <!-- <label>Accident Type:</label> -->
+          <button class="btn btn-primary btn-block filter-two disabled" data-filter="all" disabled>All</button>
+          <button class="btn btn-primary btn-block filter-two disabled" data-filter=".category-10" disabled>Auto
+            Accident</button>
+          <button class="btn btn-primary btn-block filter-two disabled" data-filter=".category-11" disabled>Slip &
+            Fall</button>
+          <button class="btn btn-primary btn-block filter-two disabled" data-filter=".category-11" disabled>Slip &
+            Fall</button>
+
+          <!-- <label>Sort:</label>
+          <button class="btn btn-default btn-block sort-two disabled" data-sort="myorder:asc" disabled>Asc</button>
+          <button class="btn btn-default btn-block sort-two disabled" data-sort="myorder:desc" disabled>Desc</button> -->
+        </div>
+
+        <div>
+          <!-- <label>Accident Type:</label> -->
+          <button class="btn btn-primary btn-block filter-three disabled" data-filter="all" disabled>All</button>
+          <button class="btn btn-primary btn-block filter-three disabled" data-filter=".category-5" disabled>Auto
+            Accident</button>
+          <button class="btn btn-primary btn-block filter-three disabled" data-filter=".category-6" disabled>Slip &
+            Fall</button>
+
+          <!-- <label>Sort:</label>
+          <button class="btn btn-default btn-block sort-three disabled" data-sort="myorder:asc" disabled>Asc</button>
+          <button class="btn btn-default btn-block sort-three disabled" data-sort="myorder:desc" disabled>Desc</button> -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- partial -->
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+  <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js'></script>
+  <script src='https://cdn.jsdelivr.net/jquery.mixitup/latest/jquery.mixitup.min.js?v=2.1.2'></script>
+  <script>
+    $(function () {
+      $('#wrapper').mixItUp();
+
+      $('#content-one').mixItUp({
+        selectors: {
+          filter: '.filter-one',
+          sort: '.sort-one'
+        },
+        animation: {
+          enable: false,
+          effects: 'fade'
+        }
+      });
+      $('#content-two').mixItUp({
+        selectors: {
+          filter: '.filter-two',
+          sort: '.sort-two'
+        },
+        animation: {
+          enable: false,
+          effects: 'fade'
+        }
+      });
+      $('#content-three').mixItUp({
+        selectors: {
+          filter: '.filter-three',
+          sort: '.sort-three'
+        },
+        animation: {
+          enable: false,
+          effects: 'fade'
+        }
+      });
+
+      $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+        var target = $(e.target).attr('href');
+
+        if (target === '#tab-three') {
+          if (!$('#content-three').mixItUp('isLoaded')) {
+            $('#content-three').mixItUp({
+              selectors: {
+                filter: '.filter-three',
+                sort: '.sort-three'
+              },
+              animation: {
+                enable: false,
+                effects: 'fade'
+              }
+            });
+          } else if (!$('#content-two').mixItUp('isLoaded')) {
+            $('#content-two').mixItUp({
+              selectors: {
+                filter: '.filter-two',
+                sort: '.sort-two'
+              },
+              animation: {
+                enable: false,
+                effects: 'fade'
+              }
+            });
+          } else if (!$('#content-one').mixItUp('isLoaded')) {
+            $('#content-one').mixItUp({
+              selectors: {
+                filter: '.filter-one',
+                sort: '.sort-one'
+              },
+              animation: {
+                enable: false,
+                effects: 'fade'
+              }
+            });
+          }
+        }
+      });
+
+      $('#myTabs a').click(function (e) {
+        e.preventDefault();
+        $(this).tab('show');
+      });
+      $($('#tab-three')).click(function () {
+        $('#sidebar .filter-one, #sidebar .sort-one').addClass('disabled')
+          .prop('disabled', true);
+        $('#sidebar .filter-two, #sidebar .sort-one').addClass('disabled')
+          .prop('disabled', true);
+        $('#sidebar .filter-three, #sidebar .sort-three').removeClass('disabled')
+          .prop('disabled', false);
+      });
+      $($('#tab-two')).click(function () {
+        $('#sidebar .filter-one, #sidebar .sort-one').addClass('disabled')
+          .prop('disabled', true);
+        $('#sidebar .filter-three, #sidebar .sort-one').addClass('disabled')
+          .prop('disabled', true);
+        $('#sidebar .filter-two, #sidebar .sort-two').removeClass('disabled')
+          .prop('disabled', false);
+      });
+      $($('#tab-one')).click(function () {
+        $('#sidebar .filter-two, #sidebar .sort-two').addClass('disabled')
+          .prop('disabled', true);
+        $('#sidebar .filter-three, #sidebar .sort-two').addClass('disabled')
+          .prop('disabled', true);
+        $('#sidebar .filter-one, #sidebar .sort-one').removeClass('disabled')
+          .prop('disabled', false);
+      });
+    });
+  </script>
+
+  <script>
+    (function (root, factory) {
+      "use strict";
+      if (typeof define === 'function' && define.amd) {
+        define([], factory);
+      } else if (typeof exports === 'object') {
+        module.exports = factory();
+      } else {
+        root.MediaBox = factory();
+      }
+    }(this, function () {
+      "use strict";
+
+      var MediaBox = function (element) {
+        if (!this || !(this instanceof MediaBox)) {
+          return new MediaBox(element);
+        }
+
+        this.selector = document.querySelectorAll(element);
+        this.root = document.querySelector('body');
+        this.run();
+      };
+
+      MediaBox.prototype = {
+        run: function () {
+          Array.prototype.forEach.call(this.selector, function (el) {
+            el.addEventListener('click', function (e) {
+              e.preventDefault();
+
+              var link = this.parseUrl(el.getAttribute('href'));
+              this.render(link);
+              this.close();
+            }.bind(this), false);
+          }.bind(this));
+        },
+        template: function (s, d) {
+          var p;
+
+          for (p in d) {
+            if (d.hasOwnProperty(p)) {
+              s = s.replace(new RegExp('{' + p + '}', 'g'), d[p]);
+            }
+          }
+          return s;
+        },
+        parseUrl: function (url) {
+          var service = {},
+            matches;
+
+          if (matches = url.match(/^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=)([^#\&\?]*).*/)) {
+            service.provider = "youtube";
+            service.id = matches[2];
+          } else if (matches = url.match(
+              /https?:\/\/(?:www\.)?vimeo.com\/(?:channels\/|groups\/([^\/]*)\/videos\/|album\/(\d+)\/video\/|)(\d+)(?:$|\/|\?)/
+            )) {
+            service.provider = "vimeo";
+            service.id = matches[3];
+          } else {
+            service.provider = "Unknown";
+            service.id = '';
+          }
+
+          return service;
+        },
+        render: function (service) {
+          var embedLink,
+            lightbox;
+
+          if (service.provider === 'youtube') {
+            embedLink = 'https://www.youtube.com/embed/' + service.id;
+          } else if (service.provider === 'vimeo') {
+            embedLink = 'https://player.vimeo.com/video/' + service.id;
+          } else {
+            throw new Error("Invalid video URL");
+          }
+
+          lightbox = this.template(
+            '<div class="mediabox-wrap"><div class="mediabox-content"><span class="mediabox-close"></span><iframe src="{embed}?autoplay=1" frameborder="0" allowfullscreen></iframe></div></div>', {
+              embed: embedLink
+            });
+
+          this.root.insertAdjacentHTML('beforeend', lightbox);
+        },
+        close: function () {
+          var wrapper = document.querySelector('.mediabox-wrap');
+
+          wrapper.addEventListener('click', function (e) {
+            if (e.target && e.target.nodeName === 'SPAN' && e.target.className === 'mediabox-close') {
+              wrapper.classList.add('mediabox-hide');
+              setTimeout(function () {
+                this.root.removeChild(wrapper);
+              }.bind(this), 500);
+            }
+          }.bind(this), false);
+        }
+      };
+
+      return MediaBox;
+    }));
+    //Initialize the MediaBox.
+    MediaBox('.mediabox');
+  </script>
+
+</body>
+
+</html>
